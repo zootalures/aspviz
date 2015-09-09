@@ -1,0 +1,27 @@
+translate_canvas(20,20).
+scale_canvas(1,1).
+
+sprite(obstacle,"obstacle.png").
+sprite_layer(obstacle,bg).
+
+draw_sprite(obstacle,p(X*40,Y*40),c,c) :- blocked(psn(X,Y)),pos(X;Y).
+
+sprite(target,"target.png").
+draw_sprite(target,p(X*40,Y*40),c,c) :- target(psn(X,Y)),pos(X;Y).
+
+sprite(home,"start.png").
+draw_sprite(home,p(X*40,Y*40),c,c) :- p(0,psn(X,Y)),pos(X;Y).
+
+reached(p(X,Y)):- p(T,psn(X,Y)), time(T),pos(X;Y).
+
+brush(rbrush). 
+brush_width(rbrush,3). 
+brush_color(rbrush,green). 
+draw_rect(rbrush,p(X*40-19,Y*40-19),38,38) :- reached(p(X,Y)),pos(X;Y).
+
+brush(urbrush). 
+brush_width(urbrush,3). 
+brush_color(urbrush,red). 
+draw_rect(urbrush,p(X*40-19,Y*40-19),38,38) :- not reached(p(X,Y)), pos(X;Y).
+
+

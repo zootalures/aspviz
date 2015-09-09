@@ -1,0 +1,105 @@
+% sets the viewport of the 
+#show viewport/3.
+
+
+% defines a named color e.g. color(red,rgb(255,0,0)).
+#show color/2.
+% defines a named font (text style) e.g. font(bodytext).
+#show font/1.
+
+% sets the weight of a named font
+% e.g. font_style(bodytext,bold). font_style(bodytext, italic).
+#show font_style/2.
+
+% sets the point size of text style font_size(afont,12).  
+#show font_size/2.
+
+% sets the color  for a text style, may use named colors or rgb syntax.
+% e.g font_color(afont,red).  
+#show font_color/2.
+
+% draws a string of text 
+% font must be a named font defined by font(X). 
+% HPos,YPos may be "c" (centered) or otherwise for left, 
+% Point is  a coordinate of the form p(X,Y), text is a quoted string or atom
+% e.g. draw_text(bodyfont,c,c,p(30,30),"hello world").
+#show draw_text/5.
+
+% Draws a line with brush Brush from point From to point To
+% Brush is a named brush, From and To are points
+% e.g. draw_line(thick,p(10,10),p(20,20)).
+#show draw_line/3.
+
+% Draws an unfilled rectangle with a given brush
+%  Brush is a named brush, point is a p(X,Y) W,H are integers. 
+% e.g. draw_rect(abrush,p(X,Y),10,10).
+#show draw_rect/4.
+
+% Fills a rect with a given color, edges are drawn with a given brush
+% Brush is a named brush
+% Color is a named color or an rgb value, 
+% Point is a p(X,Y) point
+% Width,Height are integers
+% e.g. fill_rect(abrush,black,p(10,10),200,200).
+#show fill_rect/5.
+#show fill_ellipse/5.
+
+% Defines a named brush
+#show brush/1.
+
+% Sets the width of a named brush
+#show brush_width/2.
+
+% Sets the color of a brush
+#show brush_color/2.
+
+% Defines a named sprite (image), FileName should be a quoted string indicated a file name
+% The search path (e.g. the base name of the source file) will be searched for matching files) 
+#show sprite/2.
+
+% renders a sprite on the canvas
+% Sprite - named sprite
+% Point is a p(X,Y), Hpos,Ypos are "c" to center or otheriwse to draw top,left
+#show draw_sprite/4.
+
+#show draw_ellipse/4.
+
+#show fill_ellipse/5.
+
+% Translates the whole canvas by X,Y.
+#show translate_canvas/2.
+
+% Scales the whole canvas by X,Y
+#show scale_canvas/2.
+
+% Rotates the whole canvas by X degrees
+#show rotate_canvas/1.
+
+% sets the BG color to the named color
+#show background_color/1.
+
+% Defines a frame for animation, each answer set should contain no more 
+% than one, all answer sets are sorted (numerically or by string) by the value of X
+#show frame/1.
+
+
+% Below are not Fully implemented yet 
+#show draw_point/2.
+
+#show polygon/1.
+#show poly_fill/2.
+#show poly_line/3.
+#show poly_brush/2.
+
+% some basic colors 
+color(black,rgb(0,0,0)).
+color(white,rgb(255,255,255)).
+color(gray,rgb(128,128,128)).
+color(green,rgb(0,255,0)).
+color(blue,rgb(0,0,255)).
+color(red,rgb(255,0,0)).
+
+
+
+brush(none). 
+brush_width(none,0).

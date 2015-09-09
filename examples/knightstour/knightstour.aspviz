@@ -1,0 +1,54 @@
+translate_canvas(20,20).
+scale_canvas(1,1).
+%background_color(white). 
+#const sc=32.
+#const xmax=6.
+#const ymax=6.
+
+% set up sprites, brushes and fonts
+sprite(knight,"knight.png").
+
+brush(obrush).
+brush_color(obrush,black).
+brush_width(obrush,1).
+
+font(numfont).
+font_size(numfont,9).
+font_weight(numfont,bold).
+font_color(numfont,black).
+font_bgcolor(numfont,white).
+
+
+%draw board border
+draw_rect(obrush,p(0,0),sc*xmax,sc*ymax).
+
+%draw black tiles
+fill_rect(obrush,rgb(128,128,128),p((K*sc) - sc,(J*sc) - sc),sc,sc) :- (K mod 2)==0 , (J mod 2)==0,xpos(K),ypos(J).
+fill_rect(obrush,rgb(128,128,128),p((K*sc) - sc,(J*sc) - sc),sc,sc) :- (K mod 2)==1 , (J mod 2)==1,xpos(K),ypos(J).
+
+% draw the sprite's current position
+draw_sprite(knight,p(X*sc - sc/2,Y*sc - sc/2),c,c):- position(T,X,Y),xpos(X),ypos(Y),time(T),frame(T).
+
+% draw numbers
+
+%draw_text(numfont,c,c,p(X*sc - sc/2,Y*sc-sc/2),T) :- 
+%				position(T,X,Y),time(T;F),xpos(X),ypos(Y),frame(F), F>=T.
+
+
+% draw lines
+brush(lb).
+brush_color(lb,red).
+brush_width(lb,2).
+
+draw_line(lb,p(X1*sc - sc/2,Y1*sc - sc/2),p(X2*sc - sc/2,Y2*sc - sc/2)) :- 
+	  position(T-1,X1,Y1	),
+	  position(T,X2,Y2),
+	  time(T;F),frame(F),F>=T,
+	  xpos(X1;X2),ypos(Y1;Y2).
+
+
+% create a frame for each time instant and one answer set per frame
+1 {frame(T):time(T) } 1.
+%:- frame(T1), frame(T2), T1!=T2,time(T1;T2).
+%gotframe:- frame(T), time(T).
+%:- not gotframe. 

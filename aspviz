@@ -1,0 +1,16 @@
+#!/bin/bash
+
+ASPVIZDIR=/home/occ/software/aspviz-0.2.4
+
+for i in ${ASPVIZDIR}/deps/*.jar; do
+	CLASSPATH=${CLASSPATH}:$i;
+done
+
+if [ -d "${ASPVIZDIR}/bin/" ] ; then 
+	CLASSPATH=${ASPVIZDIR}/bin/:${CLASSPATH}
+
+else
+	CLASSPATH=${ASPVIZDIR}/dist/aspviz-0.2.4.jar:${CLASSPATH}
+fi
+
+java -Dsolver.args=""  -Daspviz.dir=${ASPVIZDIR}/ ${JAVAARGS} -cp ${CLASSPATH} edu.bath.aspviz.ASPViz $@

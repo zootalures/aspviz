@@ -1,0 +1,43 @@
+
+posv(0..3).
+piece(a;b;c;d;e;f).
+
+piece_order(a,0).
+piece_color(a,rgb(255,0,0)).
+
+piece_order(b,1).
+piece_color(b,rgb(0,255,0)).
+
+piece_order(c,2).
+piece_color(c,rgb(0,0,255)).
+
+piece_order(d,3).
+piece_color(d,rgb(255,255,0)).
+
+piece_order(e,4).
+piece_color(e,rgb(255,0,255)).
+
+piece_order(f,5).
+piece_color(f,rgb(0,255,255)).
+
+
+partnode(part(P,X,Y,Z)):- partf(P,X,Y,Z), piece(P), posv(X;Y;Z).
+
+node(P):- piece(P).
+node(P):- partnode(P).
+
+node_parent(P,origin):- piece(P).
+%node_transform(P,translate(X,Y,0,0)):- piece(P),piece_order(P,Order).
+node_attrib(P,color(C)):- piece_color(P,C).
+
+node_parent(part(P,X,Y,Z),P):- partf(P,X,Y,Z).
+
+% Display each part relative to it's parent
+node_transform(part(P,X,Y,Z),l(translate(X,Y,Z))):- partf(P,X,Y,Z).
+node_shape(X,cube):- partnode(X).
+
+
+node(origin).
+
+
+root_node(origin).

@@ -1,0 +1,26 @@
+
+posv(0..3).
+
+
+piece_order(a,0).
+piece_order(b,1).
+piece_order(c,2).
+piece_order(d,3).
+piece_order(e,4).
+piece_order(f,5).
+
+node(P):- piece(P).
+node(P):- partnode(P).
+partnode(part(P,X,Y,Z)):- part(P,X,Y,Z), piece(P),P=a, posv(X;Y;Z).
+node_shape(X,cube):- partnode(X).
+node_parent(part(P,X,Y,Z),P):- part(P,X,Y,Z).
+% translate and rotate  the pieces slightly
+
+node_transform(part(P,X,Y,Z),translate(X,Y,Z)):- part(P,X,Y,Z), piece_order(P,Order).
+node_parent(P,origin):- piece(P).
+
+node_attrib(P,color(rgb(255,0,0))):- partnode(P).
+node(origin).
+
+
+root_node(origin).

@@ -1,0 +1,27 @@
+#const sub=3.
+
+position(1 .. sub*sub).
+
+scale_canvas(2,2).
+translate_canvas(20,20).
+%background_color(rgb(255,255,255)).
+brush(light). brush_color(light,rgb(5,5,5)). brush_width(light,1).
+brush(dark). brush_color(dark,black). brush_width(dark,2).
+
+font(inferred). font_size(inferred,12).
+font(initial). font_style(initial,bold). font_size(initial,12).
+
+% Draw grid (use hard lines to separate sub-squares)
+draw_rect(light,p((X-1)*30,(Y-1)*30),30,30) :- position(X;Y).
+draw_rect(dark,p((X-1)*30,(Y-1)*30),90,90) :- position(X;Y), 
+		((X-1) mod 3)==0, ((Y-1) mod 3)== 0.
+
+% draw cells (initial and then inferred) using different fonts
+draw_text(initial,c,c,p((PX - 1) * 30+15,(PY - 1) *30+15),V) :-
+     initial(PX,PY,V), position(PX;PY;V).
+
+1{frame(X): position(X)}1.
+
+
+draw_text(inferred,c,c,p((PX - 1) * 30 + 15,(PY - 1) *30 + 15),V) :-
+     state(PX,PY,V), not initial(PX,PY,V),position(PX;PY;V;K), frame(K), V<=K.

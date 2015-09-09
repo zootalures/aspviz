@@ -1,0 +1,22 @@
+<project>
+	<files>
+		<file id="mazesolver">maze.lp</file>
+		<file id="mazeproblem">maze-problem.lp</file>
+		<file id="mazeanimmaker">maze-anim.aspviz</file>
+	</files>
+	<program id="mazesprog">
+		<inputfile ref="mazesolver" />
+		<inputfile ref="mazeproblem" />
+	</program>
+	<program id="mazeanimation">
+		<inputfile ref="mazeanimaker" />
+		<inputvar type="answerset" name="mazesolution" />
+	</program>
+	<target>
+		<foreach var="soln" items="${solve(mazeprog)}">
+			<solve ref="mazeanimation" >
+				<bind from="soln" to="mazesolution"/>
+			</solve>
+		</foreach>
+	</target>
+</project>

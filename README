@@ -1,0 +1,37 @@
+ASPViz - simple tool for visualising answer set program data
+
+(c) 2008-2009 Owen Cliffe, University of Bath
+
+Command Line Tool: 
+
+aspviz -Cc -n numAnswerSets -v vizprog -f [format] -o [outfile] input files...
+	 --format (-f) output format 'svg' or 'png'
+	 --output (-o) output file name pattern
+	 --size (-s) for raster output, canvas size WxH
+	 --combined (-c)  combine answers from problem before visualisation
+	 --allcombined (-C)  combine visualisation answer sets for each answer of P before rendering
+     --justrender  (-j)  Only render - in this case the input is a solved answer set which includes visualisation primitives (*)
+     --paths  (-P)   A colon seperated list of search paths for external artifacts (e.g. images in the rendering) 
+     
+     
+(*) for example:
+
+  clingo  examples/sudoku/su-doku.lp examples/sudoku/puzzle-easy.lp examples/sudoku/visualise.aspviz  lib/aspviz2d.lib 2>&1  | ./aspviz -j 
+
+aspviz accepts one or more unground answer set programs, zero or more viz programs 
+and generates zero or more visualisation images based on the answer sets of the 
+input programs and viz programs. 
+
+The program invokes a given solver (clingo by default) on the input programs (P) , then 
+for each answer set of the underlying program generates a new ground program based 
+on the atoms of the input program and solves this with respect to the given viz 
+program (V) . 
+
+Viz programs are normal answer set programs which may themselves induce multiple 
+answer sets over each answer set of P, output files are labeled according to the answer
+set of P which generated them and the visualisation answer set (frame) . 
+
+The list of supported visualisation  atoms is documented in lib/aspviz2d.lp. 
+
+
+

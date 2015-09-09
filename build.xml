@@ -1,0 +1,46 @@
+<project name="aspviz" default="dist">
+	<property name="version" value="0.2.4" />
+
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="dist/build" />
+	<property name="deps.dir" value="deps" />
+	<property name="jar.file" value="dist/aspviz-${version}.jar" />
+
+	<path id="master-classpath">
+		<fileset dir="${deps.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${build.dir}" />
+	</path>
+
+	<target name="dist" depends="build">
+		<mkdir dir="${build.dir}" />
+		<jar destfile="${jar.file}">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				 <attribute name="Main-Class" value="edu.bath.aspviz.ASPViz"/>
+
+				<section name="common">
+					<attribute name="Specification-Title" value="ASPViz" />
+					<attribute name="Specification-Version" value="${version}" />
+					<attribute name="Specification-Vendor" value="University of Bath" />
+					<attribute name="Implementation-Title" value="common" />
+					<attribute name="Implementation-Version" value="${version} ${TODAY}" />
+					<attribute name="Implementation-Vendor" value="University of Bath" />
+				</section>
+			</manifest>
+
+			<fileset dir="${build.dir}" includes="**/**">
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="build">
+		<mkdir dir="${build.dir}" />
+		<javac destdir="${build.dir}" debug="true" classpathref="master-classpath">
+			<src path="${src.dir}" />
+
+		</javac>
+	</target>
+
+</project>

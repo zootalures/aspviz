@@ -1,0 +1,55 @@
+
+translate_canvas(20,20).
+scale_canvas(1,1).
+
+%draw_rect(bbrush,p(0,0),240,240).
+layer(fg).
+layer(bg).
+layer_above(top,bg).
+
+brush(bbrush).
+brush_color(bbrush,black).
+sprite(obstacle,"obstacle.png").
+sprite_layer(obstacle,bg).
+
+%fill_rect(obrush,white,p(X*40-25,Y*40-25),40,40) :- blocked(psn(X,Y)),pos(X;Y).
+draw_sprite(obstacle,p(X*40,Y*40),c,c) :- blocked(psn(X,Y)),pos(X;Y).
+
+
+sprite(target,"target.png").
+sprite_layer(target,bg).
+draw_sprite(target,p(X*40,Y*40),c,c) :- target(psn(X,Y)),pos(X;Y),not
+p(T,psn(X,Y)), time(T),frame(T).
+
+
+sprite(home,"start.png").
+draw_sprite(home,p(X*40,Y*40),c,c) :- p(0,psn(X,Y)),pos(X;Y),not
+p(T,psn(X,Y)), time(T),frame(T).
+
+
+
+
+% start of per-frame stuff
+1 { frame(T) :time (T)} 1.
+
+%:- frame(T), nullframe(T),time(T).
+%:- frame(T1), frame(T2), T1!=T2,time(T1;T2).
+gotframe:- frame(T), time(T).
+:- not gotframe.
+%nullframe(T):- p(T,psn(X,Y)), p(T-1,psn(X,Y)),pos(X;Y),time(T).
+
+font(dfl).
+font_color(dfl,black).
+font_layer(dfl,top).
+
+draw_text(dfl,c,c,p(X*40-15,Y*40+15),T) :- p(T,psn(X,Y)), pos(X;Y), frame(K),K>=T,time(K;T).
+
+sprite(mouse,"mouse.png").
+draw_sprite(mouse,p(X*40,Y*40),c,c) :- p(T,psn(X,Y)),pos(X;Y),time(T),frame(T).
+sprite_layer(mouse,fg).
+
+brush(db).
+brush_width(db,4).
+brush_color(db,green).
+brush_layer(db,fg).
+draw_line(db,p(X1*40,Y1*40),p(X2*40,Y2*40)) :- p(T,psn(X1,Y1)),p(T+1,psn(X2,Y2)), frame(K),K>T,time(K;T),pos(X1;X2;Y1;Y2).
